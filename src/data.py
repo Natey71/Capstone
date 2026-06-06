@@ -1,7 +1,14 @@
 from pathlib import Path
 import pandas as pd
 import numpy as np
+from sklearn.datasets import fetch_openml
 
+def load_raw_data_into_csv(path: str | Path) -> None:
+    """Load the raw data from a csv file and save it to a new csv file."""
+    data = fetch_openml(data_id=151)
+
+    df = pd.DataFrame(data.data, columns=data.feature_names)
+    df.to_csv(path, index=False)
 
 def load_raw_data(path: str | Path) -> pd.DataFrame:
     """Load the raw data from a csv file."""

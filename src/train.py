@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from data import (
+    load_raw_data_into_csv, 
     load_raw_data,
     clean_raw_data,
     create_price_direction_target,
@@ -13,13 +14,16 @@ from features import (
 )
 from model import train_and_evaluate_models, save_model
 
-RAW_DATA_PATH = Path("../data/raw/data.csv")
-PROCESSED_DATA_PATH = Path("../data/processed/modeling_data.csv")
-METRICS_PATH = Path("../reports/metrics.csv")
-MODEL_DIR = Path("../models")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+RAW_DATA_PATH = PROJECT_ROOT / "data" / "raw" / "data.csv"
+PROCESSED_DATA_PATH = PROJECT_ROOT / "data" / "processed" / "modeling_data.csv"
+METRICS_PATH = PROJECT_ROOT / "reports" / "metrics.csv"
+MODEL_DIR = PROJECT_ROOT / "models"
 
 
 def main():
+    load_raw_data_into_csv(RAW_DATA_PATH)
     raw_df = load_raw_data(RAW_DATA_PATH)
     clean_df = clean_raw_data(raw_df)
     target_df = create_price_direction_target(clean_df)
